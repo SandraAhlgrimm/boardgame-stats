@@ -18,11 +18,12 @@ npm run app.js
 - Add player seed data
 - Add plays (vuln here)
 - Add plays seed data
+- Add BGG API data
 - Implement frontend
 - Implement security vulnerability such as db.all(`SELECT * FROM books WHERE author LIKE '%${author}'`)
 - Implement code error - SELECT * FROM non_existent_table
 - Implement code error - missing comma between endpoint params
-- Create issues for feature implementation (locations),
+- Create issues for feature implementation (locations, grab more data [images] for frontend),
 - Create issues for language conversion
 - Script out add testing
 
