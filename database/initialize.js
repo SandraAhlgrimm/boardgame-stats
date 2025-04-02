@@ -1,4 +1,4 @@
-const { getDbConnection } = require('./database')
+const { getDbConnection } = require('./connect')
 
 async function initializeDb() {
 	const db = await getDbConnection()

@@ -1,6 +1,7 @@
 const express = require('express')
-const { getDbConnection } = require('./database')
-const { initializeDb } = require('./dbSetup')
+const { getDbConnection } = require('./database/connect')
+const { initializeDb } = require('./database/initialize')
+const gameRoutes = require('./routes/games')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -13,33 +14,7 @@ app.get('/', (req, res) => {
 	res.json({ message: 'Welcome to the SQLite Express API' })
 })
 
-app.get('/games', async (req, res) => {
-	try {
-		const db = await getDbConnection()
-		const games = await db.all('SELECT * FROM games')
-		res.json(games)
-	} catch (err) {
-		res.status(500).json({ error: err.message })
-	}
-})
-
-app.post('/games', async (req, res) => {
-	const { title, boardgamegeek_id, notes } = req.body
-
-	if (!title || !boardgamegeek_id) {
-		res.status(400).json({ error: 'Title and boardgamegeek_id are required' })
-		return
-	}
-
-	const db = await getDbConnection()
-	const result = await db.run('INSERT INTO games (title, boardgamegeek_id, notes) VALUES (?, ?, ?)', [
-		title,
-		boardgamegeek_id,
-		notes,
-	])
-
-	res.json({ id: result.lastID, title, boardgamegeek_id, notes, email })
-})
+app.use('/games', gameRoutes)
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
