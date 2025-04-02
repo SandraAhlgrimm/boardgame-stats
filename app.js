@@ -1,26 +1,12 @@
 const express = require('express')
 const { getDbConnection } = require('./database')
+const { initializeDb } = require('./dbSetup')
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
-async function initializeDb() {
-	const db = await getDbConnection()
-	await db.exec(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`)
-	await db.exec(`CREATE TABLE IF NOT EXISTS games (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    boardgamegeek_id INTEGER NOT NULL,
-    notes TEXT
-  )`)
-}
 initializeDb().catch(console.error)
 
 app.get('/', (req, res) => {
