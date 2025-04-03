@@ -14,7 +14,6 @@ npm run app.js
 ## TODO
 
 - Add BGG API data
-- Implement frontend
 - Implement security vulnerability such as db.all(`SELECT * FROM books WHERE author LIKE '%${author}'`)
 - Implement code error - SELECT * FROM non_existent_table
 - Implement code error - missing comma between endpoint params

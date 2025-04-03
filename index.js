@@ -9,6 +9,8 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
+app.use(express.static('public'))
+
 app.engine(
 	'hbs',
 	exphbs.engine({
@@ -19,7 +21,6 @@ app.engine(
 )
 app.set('view engine', 'hbs')
 app.set('views', './views')
-
 initializeDb().catch(console.error)
 
 app.use('/api', apiRoutes)

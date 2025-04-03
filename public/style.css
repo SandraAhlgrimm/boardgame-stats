@@ -1,0 +1,21 @@
+body {
+	padding: 1rem;
+}
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+nav ul {
+	display: flex;
+	gap: 1rem;
+}
+main {
+	padding: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 0.25rem;
+}
+main ul {
+	padding-bottom: 0;
+}
