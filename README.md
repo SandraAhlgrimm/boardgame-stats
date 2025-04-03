@@ -13,7 +13,6 @@ npm run app.js
 
 ## TODO
 
-- Add game seed data
 - Add players
 - Add player seed data
 - Add plays (vuln here)
@@ -23,7 +22,7 @@ npm run app.js
 - Implement security vulnerability such as db.all(`SELECT * FROM books WHERE author LIKE '%${author}'`)
 - Implement code error - SELECT * FROM non_existent_table
 - Implement code error - missing comma between endpoint params
-- Create issues for feature implementation (locations, grab more data [images] for frontend),
+- Create issues for feature implementation (locations, grab more data [images] for frontend, add game comments),
 - Create issues for language conversion
 - Script out add testing
 
