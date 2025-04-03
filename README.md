@@ -13,8 +13,6 @@ npm run app.js
 
 ## TODO
 
-- Add players
-- Add player seed data
 - Add plays (vuln here)
 - Add plays seed data
 - Add BGG API data
