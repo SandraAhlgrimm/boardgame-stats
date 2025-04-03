@@ -1,6 +1,6 @@
 # Boardgame Stats
 
-This is a small, incomplete demo with purposeful security vulnerabilities to demo various parts of the GitHub Platform. You probably shouldn't use it...
+This is a small, incomplete demo by @phazonoverload with purposeful security vulnerabilities to demo various parts of the GitHub Platform. You probably shouldn't use it...
 
 ## Usage
 
