@@ -33,19 +33,4 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
-// Add a new player
-// router.post('/', async (req, res) => {
-// 	const { name } = req.body
-
-// 	if (!name) {
-// 		res.status(400).json({ error: 'Name is required' })
-// 		return
-// 	}
-
-// 	const db = await getDbConnection()
-// 	const result = await db.run('INSERT INTO players (name) VALUES (?)', [name])
-
-// 	res.json({ id: result.lastID, name })
-// })
-
 module.exports = router

@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
     LEFT JOIN play_players pp ON p.id = pp.play_id
     GROUP BY p.id
   `)
+
 	res.json(plays)
 })
 
