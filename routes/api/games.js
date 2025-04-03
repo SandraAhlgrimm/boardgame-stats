@@ -3,6 +3,7 @@ const { getDbConnection } = require('../../database/connect')
 
 const router = express.Router()
 
+// Get all games
 router.get('/', async (req, res) => {
 	try {
 		const db = await getDbConnection()
@@ -13,20 +14,7 @@ router.get('/', async (req, res) => {
 	}
 })
 
-router.post('/', async (req, res) => {
-	const { title, bgg, notes } = req.body
-
-	if (!title || !bgg) {
-		res.status(400).json({ error: 'Title and bgg are required' })
-		return
-	}
-
-	const db = await getDbConnection()
-	const result = await db.run('INSERT INTO games (title, bgg, notes) VALUES (?, ?, ?)', [title, bgg, notes])
-
-	res.json({ id: result.lastID, title, bgg, notes })
-})
-
+// Get a single game by ID
 router.get('/:id', async (req, res) => {
 	const { id } = req.params
 
@@ -45,8 +33,8 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
-router.put('/:id', async (req, res) => {
-	const { id } = req.params
+// Add a new game
+router.post('/', async (req, res) => {
 	const { title, bgg, notes } = req.body
 
 	if (!title || !bgg) {
@@ -54,37 +42,10 @@ router.put('/:id', async (req, res) => {
 		return
 	}
 
-	try {
-		const db = await getDbConnection()
-		const result = await db.run('UPDATE games SET title = ?, bgg = ?, notes = ? WHERE id = ?', [title, bgg, notes, id])
+	const db = await getDbConnection()
+	const result = await db.run('INSERT INTO games (title, bgg, notes) VALUES (?, ?, ?)', [title, bgg, notes])
 
-		if (result.changes === 0) {
-			res.status(404).json({ error: 'Game not found' })
-			return
-		}
-
-		res.json({ id, title, bgg, notes })
-	} catch (err) {
-		res.status(500).json({ error: err.message })
-	}
-})
-
-router.delete('/:id', async (req, res) => {
-	const { id } = req.params
-
-	try {
-		const db = await getDbConnection()
-		const result = await db.run('DELETE FROM games WHERE bgg = ?', [id])
-
-		if (result.changes === 0) {
-			res.status(404).json({ error: 'Game not found' })
-			return
-		}
-
-		res.json({ message: 'Game deleted successfully' })
-	} catch (err) {
-		res.status(500).json({ error: err.message })
-	}
+	res.json({ id: result.lastID, title, bgg, notes })
 })
 
 module.exports = router
