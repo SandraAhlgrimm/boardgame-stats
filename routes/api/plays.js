@@ -37,24 +37,6 @@ router.get('/:playId', async (req, res) => {
 	res.json(play)
 })
 
-// Add a new play
-router.post('/', async (req, res) => {
-	const { game_id, player_ids, notes } = req.body
-	if (!game_id || !player_ids || !Array.isArray(player_ids)) {
-		return res.status(400).json({ error: 'game_id and an array of player_ids are required' })
-	}
-
-	const db = await getDbConnection()
-	const result = await db.run(`INSERT INTO plays (game_id, notes) VALUES (${game_id}, '${notes}')`)
-	const playId = result.lastID
-
-	for (const playerId of player_ids) {
-		await db.run(`INSERT INTO play_players (play_id, player_id) VALUES (${playId}, ${playerId})`)
-	}
-
-	res.status(201).json({ message: 'Play added successfully', playId })
-})
-
 // Get plays for a specific game
 router.get('/game/:gameId', async (req, res) => {
 	const { gameId } = req.params

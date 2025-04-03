@@ -33,19 +33,4 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
-// Add a new game
-router.post('/', async (req, res) => {
-	const { title, bgg, notes } = req.body
-
-	if (!title || !bgg) {
-		res.status(400).json({ error: 'Title and bgg are required' })
-		return
-	}
-
-	const db = await getDbConnection()
-	const result = await db.run('INSERT INTO games (title, bgg, notes) VALUES (?, ?, ?)', [title, bgg, notes])
-
-	res.json({ id: result.lastID, title, bgg, notes })
-})
-
 module.exports = router
