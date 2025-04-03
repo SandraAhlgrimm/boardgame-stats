@@ -1,0 +1,13 @@
+<h2>Play Details</h2>
+
+<p><strong>Game:</strong> {{play.title}}</p>
+<p><strong>Notes:</strong> {{play.notes}}</p>
+
+<p><strong>Players:</strong></p>
+<ul>
+	{{#each play.players}}
+		<li><a href='/players/{{this.id}}'>{{this.name}}</a></li>
+	{{/each}}
+</ul>
+
+<a href='/plays'>Go back to list</a>

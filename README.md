@@ -18,7 +18,7 @@ npm run app.js
 - Implement security vulnerability such as db.all(`SELECT * FROM books WHERE author LIKE '%${author}'`)
 - Implement code error - SELECT * FROM non_existent_table
 - Implement code error - missing comma between endpoint params
-- Create issues for feature implementation (locations, grab more data [images] for frontend, winners/scores),
+- Create issues for feature implementation (locations, grab more data [images] for frontend, winners/scores), add player favorite game
 - Create issues for language conversion
 - Script out add testing
 

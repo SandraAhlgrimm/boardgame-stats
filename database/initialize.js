@@ -9,7 +9,7 @@ async function initializeDb() {
 async function createTables(db) {
 	// Create the 'games' table to store board game information
 	await db.exec(`CREATE TABLE IF NOT EXISTS games (
-    boardgamegeek_id INTEGER PRIMARY KEY NOT NULL,
+    bgg INTEGER PRIMARY KEY NOT NULL,
     title TEXT NOT NULL,
     notes TEXT
   )`)
@@ -25,7 +25,7 @@ async function createTables(db) {
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     game_id INTEGER NOT NULL,
     notes TEXT,
-    FOREIGN KEY (game_id) REFERENCES games (boardgamegeek_id)
+    FOREIGN KEY (game_id) REFERENCES games (bgg)
   )`)
 
 	// Create the 'play_players' table to associate players with play sessions
@@ -40,7 +40,7 @@ async function createTables(db) {
 
 async function createInitialRecords(db) {
 	// Insert initial records into the 'games' table
-	await db.run(`INSERT OR IGNORE INTO games (title, boardgamegeek_id, notes) VALUES 
+	await db.run(`INSERT OR IGNORE INTO games (title, bgg, notes) VALUES 
     ('Android: Netrunner', 124742, 'Now out of print. 2 player asymmetrical card game. I have a lot of cards for this game and a sealed copy.'),
     ('CATAN', 13, NULL),
     ('Dominion', 36218, NULL),

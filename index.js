@@ -1,20 +1,29 @@
 const express = require('express')
+const exphbs = require('express-handlebars')
 const { getDbConnection } = require('./database/connect')
 const { initializeDb } = require('./database/initialize')
 const apiRoutes = require('./routes/api')
+const viewRoutes = require('./routes/views')
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
+app.engine(
+	'hbs',
+	exphbs.engine({
+		extname: '.hbs',
+		defaultLayout: 'main',
+		layoutsDir: './views/layouts',
+	})
+)
+app.set('view engine', 'hbs')
+app.set('views', './views')
 
 initializeDb().catch(console.error)
 
-app.get('/', (req, res) => {
-	res.json({ message: 'Welcome to the SQLite Express API' })
-})
-
 app.use('/api', apiRoutes)
+app.use('/', viewRoutes)
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)

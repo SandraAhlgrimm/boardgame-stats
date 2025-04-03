@@ -1,0 +1,2 @@
+- In /routes/views there is a lot of duplication. Can we refactor repetitive code?
+- There's no date for plays. Add it: in the tables and seed data, api, and views.

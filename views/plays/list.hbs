@@ -1,0 +1,11 @@
+<h2>Plays List</h2>
+
+<ul>
+	{{#each plays}}
+		<li>
+			<a href='/plays/{{id}}'>
+				<span>{{title}} - {{player_names}}</span>
+			</a>
+		</li>
+	{{/each}}
+</ul>
