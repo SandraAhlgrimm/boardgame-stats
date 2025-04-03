@@ -12,6 +12,10 @@ async function createTables(db) {
     title TEXT NOT NULL,
     notes TEXT
   )`)
+	await db.exec(`CREATE TABLE IF NOT EXISTS players (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL
+  )`)
 }
 
 async function createInitialRecords(db) {
@@ -24,6 +28,15 @@ async function createInitialRecords(db) {
   ('Railroad Ink Challenge', 367513, '1-n player roll and write game'),
   ('Ticket to Ride: Berlin', 388036, '15 minute version of Ticket to Ride'),
   ('Tokaido', 123540, 'Weird as a 2-player.')`)
+
+	await db.run(`INSERT OR IGNORE INTO players (name) VALUES 
+  ('Kevin Lewis'),
+  ('Floor Drees'),
+  ('Nathaniel Okenwa'),
+  ('Jose Lewis'),
+  ('Myrsini Koukiasa'),
+  ('Tystan Williams'),
+  ('Tobias Beckmann')`)
 }
 
 module.exports = { initializeDb }
