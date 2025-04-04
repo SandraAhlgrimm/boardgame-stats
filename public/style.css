@@ -6,10 +6,26 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;
+	flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+header h1 {
+	font-size: 1rem;
+	margin: 0;
 }
 nav ul {
 	display: flex;
 	gap: 1rem;
+	flex-wrap: wrap; /* Allow wrapping for smaller screens */
+	justify-content: center; /* Center items on smaller screens */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	margin-top: 0;
+}
+nav ul li {
+	margin: 0;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 main {
 	padding: 1rem;
@@ -23,4 +39,19 @@ main ul {
 main ul + * {
 	margin-top: 1em;
 	display: block;
+}
+
+@media (max-width: 600px) {
+	header {
+		flex-direction: column; /* Stack header elements vertically */
+		align-items: stretch; /* Stretch to reduce unused space */
+		gap: 0.5rem; /* Reduce spacing between elements */
+	}
+
+	nav ul {
+		flex-direction: row; /* Keep links in a single row */
+		flex-wrap: wrap; /* Allow wrapping if needed */
+		gap: 0.5rem; /* Reduce gap between links */
+		justify-content: space-between; /* Distribute links evenly */
+	}
 }
