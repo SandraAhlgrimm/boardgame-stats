@@ -23,7 +23,11 @@ router.get('/:id', async (req, res) => {
 			return res.status(404).send('Game not found')
 		}
 
-		res.render('games/single', { game }) // Render the single game view
+		// Fetch plays for the game
+		const playsResponse = await fetch(`${baseUrl}/api/plays/game/${req.params.id}`)
+		const plays = await playsResponse.json()
+
+		res.render('games/single', { game, plays }) // Pass plays to the view
 	} catch (error) {
 		res.status(500).send('Error fetching game')
 	}

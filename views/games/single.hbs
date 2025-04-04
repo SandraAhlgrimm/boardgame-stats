@@ -3,4 +3,15 @@
 <p><strong>BoardGameGeek ID:</strong> {{game.bgg}}</p>
 <p><strong>Notes:</strong> {{game.notes}}</p>
 
+<h3>Plays</h3>
+<ul>
+	{{#each plays}}
+		<li>
+			<a href='/plays/{{id}}'>{{player_names}}</a>
+		</li>
+	{{else}}
+		<li>No plays recorded for this game.</li>
+	{{/each}}
+</ul>
+
 <a href='/games'>Go back to list</a>
