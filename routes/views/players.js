@@ -12,6 +12,11 @@ router.get('/', async (req, res) => {
 	}
 })
 
+// Render the form to create a new player
+router.get('/new', (req, res) => {
+	res.render('players/new')
+})
+
 router.get('/:id', async (req, res) => {
 	try {
 		const baseUrl = `${req.protocol}://${req.get('host')}`

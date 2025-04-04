@@ -33,4 +33,21 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
+// Create a new player
+router.post('/', async (req, res) => {
+	try {
+		const { name } = req.body
+		if (!name) {
+			return res.status(400).json({ error: 'Player name is required' })
+		}
+
+		const db = await getDbConnection()
+		await db.run(`INSERT INTO players (name) VALUES (?)`, [name])
+
+		res.redirect('/players') // Redirect to the player list after creation
+	} catch (err) {
+		res.status(500).json({ error: err.message })
+	}
+})
+
 module.exports = router
