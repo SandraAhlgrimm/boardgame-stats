@@ -1,3 +1,14 @@
 <h2>Player: {{player.name}}</h2>
 
+<h3>Plays</h3>
+<ul>
+	{{#each plays}}
+		<li>
+			<a href='/plays/{{id}}'>{{game.title}} with {{other_players}}</a>
+		</li>
+	{{else}}
+		<li>No plays recorded for this player.</li>
+	{{/each}}
+</ul>
+
 <a href='/players'>Go back to list</a>
