@@ -1,7 +1,10 @@
 <h2>Game: {{game.title}}</h2>
 
 <p><strong>BoardGameGeek ID:</strong> {{game.bgg}}</p>
-<p><strong>Notes:</strong> {{game.notes}}</p>
+
+{{#if game.notes}}
+	<p><strong>Notes:</strong> {{game.notes}}</p>
+{{/if}}
 
 <h3>Plays</h3>
 <ul>
