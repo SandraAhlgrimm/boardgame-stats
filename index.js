@@ -8,7 +8,8 @@ const viewRoutes = require('./routes/views')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(express.json())
+app.use(express.json()) // Ensure this middleware is present
+app.use(express.urlencoded({ extended: true })) // Add this to parse URL-encoded form data
 app.use(express.static('public'))
 
 app.engine(

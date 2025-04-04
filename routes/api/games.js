@@ -32,4 +32,21 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
+// Create a new game
+router.post('/', async (req, res) => {
+	try {
+		const { bgg, title, notes } = req.body
+		if (!bgg || !title) {
+			return res.status(400).json({ error: 'BGG ID and title are required' })
+		}
+
+		const db = await getDbConnection()
+		await db.run(`INSERT INTO games (bgg, title, notes) VALUES (?, ?, ?)`, [bgg, title, notes || null])
+
+		res.redirect('/games') // Redirect to the game list after creation
+	} catch (err) {
+		res.status(500).json({ error: err.message })
+	}
+})
+
 module.exports = router

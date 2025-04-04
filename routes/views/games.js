@@ -12,6 +12,11 @@ router.get('/', async (req, res) => {
 	}
 })
 
+// Render the form to create a new game
+router.get('/new', (req, res) => {
+	res.render('games/new')
+})
+
 // Single game view
 router.get('/:id', async (req, res) => {
 	try {
