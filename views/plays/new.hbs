@@ -1,0 +1,31 @@
+<h2>Create a New Play</h2>
+
+<form action='/api/plays' method='POST' onsubmit='return validateForm()'>
+	<label for='game_id'>Game:</label>
+	<select id='game_id' name='game_id' required>
+		{{#each games}}
+			<option value='{{bgg}}'>{{title}}</option>
+		{{/each}}
+	</select>
+
+	<label for='player_ids'>Players:</label>
+	<select id='player_ids' name='player_ids[]' multiple required>
+		{{#each players}}
+			<option value='{{id}}'>{{name}}</option>
+		{{/each}}
+	</select>
+	<p id='player-error' style='color: red; display: none;'>Please select at least one player.</p>
+
+	<label for='notes'>Notes:</label>
+	<textarea id='notes' name='notes'></textarea>
+
+	<button type='submit'>Create Play</button>
+</form>
+
+<a href='/plays'>Go back to list</a>
+
+<script>
+	function validateForm() { const playerSelect = document.getElementById('player_ids'); const errorElement =
+	document.getElementById('player-error'); if (playerSelect.selectedOptions.length === 0) { errorElement.style.display =
+	'block'; return false; } errorElement.style.display = 'none'; return true; }
+</script>

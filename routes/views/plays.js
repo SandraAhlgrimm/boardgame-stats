@@ -30,6 +30,20 @@ router.get('/', async (req, res) => {
 	}
 })
 
+// Render the form to create a new play
+router.get('/new', async (req, res) => {
+	try {
+		const baseUrl = `${req.protocol}://${req.get('host')}`
+		const gamesResponse = await fetch(`${baseUrl}/api/games`)
+		const playersResponse = await fetch(`${baseUrl}/api/players`)
+		const games = await gamesResponse.json()
+		const players = await playersResponse.json()
+		res.render('plays/new', { games, players })
+	} catch (error) {
+		res.status(500).send('Error loading form')
+	}
+})
+
 router.get('/:id', async (req, res) => {
 	try {
 		const baseUrl = `${req.protocol}://${req.get('host')}`
