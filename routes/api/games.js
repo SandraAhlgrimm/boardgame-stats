@@ -1,7 +1,13 @@
 const express = require('express')
+const rateLimit = require('express-rate-limit')
 const { getDbConnection } = require('../../database/connect')
+const { rateLimitConfig } = require('../../config')
 
 const router = express.Router()
+
+const apiLimiter = rateLimit(rateLimitConfig)
+
+router.use(apiLimiter)
 
 // Get all games
 router.get('/', async (req, res) => {

@@ -1,26 +1,31 @@
 {
-  "name": "boardgame-stats",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/phazonoverload/boardgame-stats.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/phazonoverload/boardgame-stats/issues"
-  },
-  "homepage": "https://github.com/phazonoverload/boardgame-stats#readme",
-  "description": "",
-  "dependencies": {
-    "express": "^5.1.0",
-    "express-handlebars": "^8.0.1",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
-  }
+	"name": "boardgame-stats",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/phazonoverload/boardgame-stats.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/phazonoverload/boardgame-stats/issues"
+	},
+	"homepage": "https://github.com/phazonoverload/boardgame-stats#readme",
+	"description": "",
+	"dependencies": {
+		"express": "^5.1.0",
+		"express-handlebars": "^8.0.1",
+		"express-rate-limit": "^7.5.0",
+		"sqlite": "^5.1.1",
+		"sqlite3": "^5.1.7"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.9"
+	}
 }
