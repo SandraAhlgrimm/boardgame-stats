@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const { getBaseUrl, BASE_URL } = require('../../config')
 
 router.get('/', async (req, res) => {
 	try {
-		const baseUrl = `${req.protocol}://${req.get('host')}` // Dynamically construct the base URL
-		const response = await fetch(`${baseUrl}/api/games`) // Use fetch instead of axios
+		const response = await fetch(`${BASE_URL}/api/games`) // Use fetch instead of axios
 		const games = await response.json()
 		res.render('games/list', { games }) // Render the list view
 	} catch (error) {
@@ -20,8 +20,7 @@ router.get('/new', (req, res) => {
 // Single game view
 router.get('/:id', async (req, res) => {
 	try {
-		const baseUrl = `${req.protocol}://${req.get('host')}` // Dynamically construct the base URL
-		const response = await fetch(`${baseUrl}/api/games/${req.params.id}`) // Fetch single game from API
+		const response = await fetch(`${BASE_URL}/api/games/${req.params.id}`) // Fetch single game from API
 		const game = await response.json()
 
 		if (response.status === 404) {
@@ -29,7 +28,7 @@ router.get('/:id', async (req, res) => {
 		}
 
 		// Fetch plays for the game
-		const playsResponse = await fetch(`${baseUrl}/api/plays/game/${req.params.id}`)
+		const playsResponse = await fetch(`${BASE_URL}/api/plays/game/${req.params.id}`)
 		const plays = await playsResponse.json()
 
 		res.render('games/single', { game, plays }) // Pass plays to the view

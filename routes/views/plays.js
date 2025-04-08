@@ -1,10 +1,10 @@
 const express = require('express')
+const { getBaseUrl, BASE_URL } = require('../../config')
 const router = express.Router()
 
 router.get('/', async (req, res) => {
 	try {
-		const baseUrl = `${req.protocol}://${req.get('host')}`
-		const response = await fetch(`${baseUrl}/api/plays`)
+		const response = await fetch(`${BASE_URL}/api/plays`)
 		const plays = await response.json()
 		for (const play of plays) {
 			// Fetch player details
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 				const playerIds = play.player_ids.split(',')
 				play.players = await Promise.all(
 					playerIds.map(async id => {
-						const playerResponse = await fetch(`${baseUrl}/api/players/${id}`)
+						const playerResponse = await fetch(`${BASE_URL}/api/players/${id}`)
 						return playerResponse.json()
 					})
 				)
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 				play.player_names = play.players.map(player => player.name).join(', ')
 			}
 			// Fetch game details
-			const gameResponse = await fetch(`${baseUrl}/api/games/${play.game_id}`)
+			const gameResponse = await fetch(`${BASE_URL}/api/games/${play.game_id}`)
 			const game = await gameResponse.json()
 			play.title = game.title
 		}
@@ -33,9 +33,8 @@ router.get('/', async (req, res) => {
 // Render the form to create a new play
 router.get('/new', async (req, res) => {
 	try {
-		const baseUrl = `${req.protocol}://${req.get('host')}`
-		const gamesResponse = await fetch(`${baseUrl}/api/games`)
-		const playersResponse = await fetch(`${baseUrl}/api/players`)
+		const gamesResponse = await fetch(`${BASE_URL}/api/games`)
+		const playersResponse = await fetch(`${BASE_URL}/api/players`)
 		const games = await gamesResponse.json()
 		const players = await playersResponse.json()
 		res.render('plays/new', { games, players })
@@ -46,8 +45,7 @@ router.get('/new', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		const baseUrl = `${req.protocol}://${req.get('host')}`
-		const response = await fetch(`${baseUrl}/api/plays/${req.params.id}`)
+		const response = await fetch(`${BASE_URL}/api/plays/${req.params.id}`)
 		const play = await response.json()
 
 		if (response.status === 404) {
@@ -59,7 +57,7 @@ router.get('/:id', async (req, res) => {
 			const playerIds = play.player_ids.split(',')
 			play.players = await Promise.all(
 				playerIds.map(async id => {
-					const playerResponse = await fetch(`${baseUrl}/api/players/${id}`)
+					const playerResponse = await fetch(`${BASE_URL}/api/players/${id}`)
 					return playerResponse.json()
 				})
 			)
@@ -67,7 +65,7 @@ router.get('/:id', async (req, res) => {
 			play.player_names = play.players.map(player => player.name).join(', ')
 		}
 		// Fetch game details
-		const gameResponse = await fetch(`${baseUrl}/api/games/${play.game_id}`)
+		const gameResponse = await fetch(`${BASE_URL}/api/games/${play.game_id}`)
 		const game = await gameResponse.json()
 		play.title = game.title
 
