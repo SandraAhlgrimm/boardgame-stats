@@ -1,0 +1,53 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 10
+    versioning-strategy: "auto"
+    allow:
+      # Allow only patch and minor updates
+      - dependency-type: "direct"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "npm"
+      include: "scope"
+    labels:
+      - "npm"
+      - "dependencies"
+    assignees:
+      - "phazonoverload"
+  # Configuration for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    # Group GitHub Actions updates by type
+    groups:
+      actions-testing:
+        patterns:
+          - "jest*"
+          - "mocha*"
+          - "*test*"
+      actions-deployment:
+        patterns:
+          - "deploy*"
+          - "*aws*"
+
+  # Configuration for Python with tests
+  - package-ecosystem: "pip"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    # Only allow updates that pass tests
+    rebase-strategy: "auto"
+    pull-request-branch-name:
+      separator: "-"
+    # Dependabot will run tests defined in your CI
+    # This relies on your CI configuration detecting Dependabot PRs
