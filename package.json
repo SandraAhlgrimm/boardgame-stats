@@ -19,7 +19,9 @@
 	"homepage": "https://github.com/phazonoverload/boardgame-stats#readme",
 	"description": "",
 	"dependencies": {
+		"eta": "^1.14.2",
 		"express": "^5.1.0",
+		"express-fileupload": "^1.1.8",
 		"express-handlebars": "^8.0.1",
 		"express-rate-limit": "^7.5.0",
 		"qs": "^6.10.2",
