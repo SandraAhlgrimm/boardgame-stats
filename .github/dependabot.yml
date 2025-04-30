@@ -39,15 +39,3 @@ updates:
         patterns:
           - "deploy*"
           - "*aws*"
-
-  # Configuration for Python with tests
-  - package-ecosystem: "pip"
-    directory: "/backend"
-    schedule:
-      interval: "weekly"
-    # Only allow updates that pass tests
-    rebase-strategy: "auto"
-    pull-request-branch-name:
-      separator: "-"
-    # Dependabot will run tests defined in your CI
-    # This relies on your CI configuration detecting Dependabot PRs
