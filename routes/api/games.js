@@ -32,6 +32,16 @@ router.get('/:id', async (req, res) => {
 			return res.status(404).json({ error: 'Game not found' })
 		}
 
+		// Fetch BGG XML data
+		const bggResponse = await fetch(`https://boardgamegeek.com/xmlapi2/thing?id=${id}`)
+		const bggXml = await bggResponse.text()
+
+		// Extract image URL using regex
+		const imageUrlMatch = bggXml.match(/<image>(.*?)<\/image>/)
+		if (imageUrlMatch && imageUrlMatch[1]) {
+			game.imageUrl = imageUrlMatch[1]
+		}
+
 		res.json(game)
 	} catch (err) {
 		return res.status(500).json({ error: err.message })

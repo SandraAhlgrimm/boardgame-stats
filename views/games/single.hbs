@@ -1,5 +1,9 @@
 <h2>Game: {{game.title}}</h2>
 
+{{#if game.imageUrl}}
+	<img src='{{game.imageUrl}}' alt='{{game.title}}' />
+{{/if}}
+
 <p><strong>BoardGameGeek ID:</strong> {{game.bgg}}</p>
 
 {{#if game.notes}}
