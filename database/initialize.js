@@ -43,6 +43,7 @@ async function createInitialRecords(db) {
 	await db.run(`INSERT OR IGNORE INTO games (title, bgg, notes) VALUES 
     ('Android: Netrunner', 124742, 'Now out of print. 2 player asymmetrical card game. I have a lot of cards for this game and a sealed copy.'),
     ('CATAN', 13, NULL),
+    ('Cosmic Conquest', 0, 'Space-themed diplomacy and resource management'),
     ('Dominion', 36218, NULL),
     ('Kodama: The Tree Spirits', 181810, NULL),
     ('Pan Am', 303057, 'Got it for Nathaniel. Loved it so much I bought a copy for myself.'),
@@ -69,14 +70,16 @@ async function createInitialRecords(db) {
 		await db.run(`INSERT OR IGNORE INTO plays (game_id, notes) VALUES 
       (124742, 'Kevin played a custom deck as the corp. Game via Jinteki.net.'),
       (13, NULL),
-      (36218, 'Won by one point thanks to the witch!')`)
+      (36218, 'Won by one point thanks to the witch!'),
+      (0, NULL)`)
 	}
 
 	// Insert initial records into the 'play_players' table
 	await db.run(`INSERT OR IGNORE INTO play_players (play_id, player_id) VALUES 
     (1, 1), (1, 2),
     (2, 3), (2, 4), (2, 5),
-    (3, 1), (3, 6) `)
+    (3, 1), (3, 6),
+    (4, 1), (4, 2), (4, 3) `)
 }
 
 module.exports = { initializeDb }

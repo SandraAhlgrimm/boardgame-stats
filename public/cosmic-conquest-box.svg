@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background - Deep Space -->
+  <defs>
+    <radialGradient id="spaceBackground" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#1a0933" />
+      <stop offset="50%" stop-color="#0f0521" />
+      <stop offset="100%" stop-color="#050211" />
+    </radialGradient>
+    
+    <!-- Star glow effect -->
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Planet texture -->
+    <radialGradient id="planetGradient1" cx="40%" cy="40%" r="60%" fx="40%" fy="40%">
+      <stop offset="0%" stop-color="#7b3b96" />
+      <stop offset="70%" stop-color="#4a1d66" />
+      <stop offset="100%" stop-color="#2a0f3d" />
+    </radialGradient>
+    
+    <radialGradient id="planetGradient2" cx="50%" cy="50%" r="70%" fx="40%" fy="40%">
+      <stop offset="0%" stop-color="#3a9bd9" />
+      <stop offset="70%" stop-color="#2a71a0" />
+      <stop offset="100%" stop-color="#17405c" />
+    </radialGradient>
+    
+    <!-- Ship glow -->
+    <filter id="shipGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Title text filter -->
+    <filter id="textGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Space background -->
+  <rect width="800" height="600" fill="url(#spaceBackground)" />
+  
+  <!-- Stars -->
+  <g id="stars">
+    <!-- Small stars -->
+    <g fill="#ffffff" filter="url(#starGlow)">
+      <circle cx="50" cy="75" r="1" />
+      <circle cx="120" cy="43" r="1.2" />
+      <circle cx="200" cy="98" r="0.8" />
+      <circle cx="280" cy="65" r="1" />
+      <circle cx="350" cy="120" r="0.7" />
+      <circle cx="420" cy="85" r="1.3" />
+      <circle cx="500" cy="50" r="0.9" />
+      <circle cx="580" cy="110" r="1.1" />
+      <circle cx="650" cy="75" r="1" />
+      <circle cx="720" cy="90" r="0.8" />
+      <circle cx="780" cy="40" r="1.2" />
+      <circle cx="70" cy="150" r="0.7" />
+      <circle cx="150" cy="180" r="1" />
+      <circle cx="230" cy="140" r="0.9" />
+      <circle cx="310" cy="190" r="1.1" />
+      <circle cx="380" cy="155" r="0.8" />
+      <circle cx="450" cy="175" r="1" />
+      <circle cx="530" cy="135" r="1.2" />
+      <circle cx="610" cy="170" r="0.7" />
+      <circle cx="680" cy="145" r="0.9" />
+      <circle cx="750" cy="165" r="1.1" />
+      <circle cx="90" cy="220" r="1" />
+      <circle cx="170" cy="250" r="0.8" />
+      <circle cx="250" cy="215" r="1.2" />
+      <circle cx="330" cy="260" r="0.9" />
+      <circle cx="400" cy="225" r="1.1" />
+      <circle cx="470" cy="245" r="0.7" />
+      <circle cx="550" cy="210" r="1" />
+      <circle cx="630" cy="255" r="0.8" />
+      <circle cx="700" cy="230" r="1.2" />
+      <circle cx="770" cy="240" r="0.9" />
+    </g>
+    
+    <!-- Brighter stars -->
+    <g fill="#ffffff" filter="url(#starGlow)">
+      <circle cx="100" cy="50" r="1.8" />
+      <circle cx="300" cy="80" r="2" />
+      <circle cx="500" cy="60" r="1.7" />
+      <circle cx="700" cy="40" r="1.9" />
+      <circle cx="150" cy="120" r="2.1" />
+      <circle cx="350" cy="100" r="1.8" />
+      <circle cx="550" cy="130" r="2" />
+      <circle cx="750" cy="110" r="1.7" />
+      <circle cx="200" cy="180" r="1.9" />
+      <circle cx="400" cy="160" r="2.1" />
+      <circle cx="600" cy="190" r="1.8" />
+      <circle cx="250" cy="240" r="2" />
+      <circle cx="450" cy="220" r="1.7" />
+      <circle cx="650" cy="250" r="1.9" />
+    </g>
+    
+    <!-- Nebula effects -->
+    <ellipse cx="650" cy="150" rx="200" ry="100" fill="#6b24b130" opacity="0.3" />
+    <ellipse cx="200" cy="400" rx="180" ry="120" fill="#24426b30" opacity="0.2" />
+  </g>
+  
+  <!-- Large planets -->
+  <g id="planets">
+    <!-- Purple planet with rings -->
+    <g transform="translate(150, 350)">
+      <ellipse cx="0" cy="0" rx="100" ry="100" fill="url(#planetGradient1)" />
+      <!-- Planet rings -->
+      <ellipse cx="0" cy="0" rx="150" ry="30" fill="none" stroke="#7b3b9660" stroke-width="12" />
+      <!-- Surface details -->
+      <path d="M-40,-30 Q-20,20 20,-20 T80,40" fill="none" stroke="#9b5ab8" stroke-width="5" opacity="0.5" />
+      <path d="M-70,20 Q-30,-40 10,30 T70,-10" fill="none" stroke="#9b5ab8" stroke-width="3" opacity="0.4" />
+    </g>
+    
+    <!-- Blue planet -->
+    <g transform="translate(650, 380)">
+      <circle cx="0" cy="0" r="70" fill="url(#planetGradient2)" />
+      <!-- Surface details -->
+      <path d="M-30,-20 Q-10,30 20,-10 T50,30" fill="none" stroke="#5ab9d9" stroke-width="4" opacity="0.6" />
+      <path d="M-40,10 Q-20,-20 10,20 T40,-5" fill="none" stroke="#5ab9d9" stroke-width="3" opacity="0.5" />
+      <!-- Atmosphere glow -->
+      <circle cx="0" cy="0" r="75" fill="none" stroke="#3a9bd930" stroke-width="8" />
+    </g>
+  </g>
+  
+  <!-- Spaceships -->
+  <g id="spaceships" filter="url(#shipGlow)">
+    <!-- Main flagship spaceship -->
+    <g transform="translate(450, 300) rotate(-25)">
+      <!-- Ship body -->
+      <path d="M-80,0 L-40,-25 L70,0 L-40,25 Z" fill="#303060" stroke="#5050a0" stroke-width="2" />
+      <!-- Engine glow -->
+      <ellipse cx="-75" cy="0" rx="15" ry="8" fill="#5f89ff" />
+      <!-- Cockpit -->
+      <circle cx="40" cy="0" r="12" fill="#202040" stroke="#404080" stroke-width="1" />
+      <!-- Wing details -->
+      <path d="M-30,-20 L10,-20 L20,-40 L-20,-30 Z" fill="#404080" stroke="#5060b0" stroke-width="1" />
+      <path d="M-30,20 L10,20 L20,40 L-20,30 Z" fill="#404080" stroke="#5060b0" stroke-width="1" />
+    </g>
+    
+    <!-- Smaller ship 1 -->
+    <g transform="translate(350, 250) rotate(-15) scale(0.6)">
+      <path d="M-50,0 L-20,-15 L40,0 L-20,15 Z" fill="#503060" stroke="#805080" stroke-width="2" />
+      <ellipse cx="-45" cy="0" rx="10" ry="5" fill="#ff5f89" />
+    </g>
+    
+    <!-- Smaller ship 2 -->
+    <g transform="translate(550, 200) rotate(-35) scale(0.5)">
+      <path d="M-50,0 L-20,-15 L40,0 L-20,15 Z" fill="#306050" stroke="#508070" stroke-width="2" />
+      <ellipse cx="-45" cy="0" rx="10" ry="5" fill="#5fff89" />
+    </g>
+  </g>
+  
+  <!-- Game title -->
+  <g transform="translate(400, 120)" filter="url(#textGlow)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="55" font-weight="bold" text-anchor="middle" fill="#ffffff">
+      COSMIC CONQUEST
+    </text>
+    <text x="0" y="70" font-family="Arial, sans-serif" font-size="40" font-style="italic" text-anchor="middle" fill="#a0a0ff">
+      STELLAR DOMINION
+    </text>
+  </g>
+  
+  <!-- Game features text -->
+  <g transform="translate(400, 530)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#ffffff">
+      A STRATEGIC SPACE ADVENTURE FOR 2-5 PLAYERS
+    </text>
+    <text x="0" y="30" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#a0a0ff">
+      BUILD • EXPLORE • CONQUER • DOMINATE
+    </text>
+  </g>
+</svg>
