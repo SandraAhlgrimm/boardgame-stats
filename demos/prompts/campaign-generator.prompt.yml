@@ -1,0 +1,51 @@
+name: One-Shot Campaign Generator
+description: Generates a creative one-shot RPG campaign based on user input
+model: openai/gpt-4.1
+modelParameters:
+  temperature: 0.8
+messages:
+  - role: system
+    content: |
+      You are a dungeon master AI. Your job is to generate a creative, engaging, and playable one-shot fantasy RPG campaign based on the player's preferences. Include a plot summary, key NPCs, main locations, a hook, and a final twist. Use clear formatting.
+  - role: user
+    content: |
+      Generate a fantasy RPG one-shot campaign with the following preferences:
+      <preferences>
+      {{input}}
+      </preferences>
+      Format your output as follows:
+      - Title
+      - Campaign Hook
+      - Plot Summary
+      - Key NPCs (with brief descriptions)
+      - Main Locations (with brief descriptions)
+      - Final Twist
+testData:
+  - input: |
+      Setting: Haunted forest
+      Tone: Dark and mysterious
+      Level: 3
+      Special request: Include a talking animal companion
+    expected: |
+      Title: The Whispering Woods
+      Campaign Hook: The village of Gloomhollow is plagued by disappearances in the nearby haunted forest. The party is hired to investigate.
+      Plot Summary: The players venture into the haunted forest, uncovering lost ruins and spectral apparitions. They are aided by a talking raven named Corvus, who knows the forest's secrets. As they delve deeper, they discover the forest is cursed by a betrayed druid.
+      Key NPCs:
+        - Corvus: A witty, talking raven who guides the party.
+        - Eldara: The ghostly druid seeking redemption.
+        - Mayor Harl: The worried mayor of Gloomhollow.
+      Main Locations:
+        - Gloomhollow Village: A fearful settlement on the forest's edge.
+        - The Whispering Woods: A haunted forest filled with illusions.
+        - Forgotten Altar: The source of the curse.
+      Final Twist: The curse can only be broken if the party convinces Eldara to forgive her betrayers, not through combat.
+evaluators:
+  - name: Output should include all required sections
+    string:
+      contains:
+        - 'Title'
+        - 'Campaign Hook'
+        - 'Plot Summary'
+        - 'Key NPCs'
+        - 'Main Locations'
+        - 'Final Twist'
