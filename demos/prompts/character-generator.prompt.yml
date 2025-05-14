@@ -1,4 +1,4 @@
-name: NPC Generator
+name: Non-Player Character Generator
 description: Generates creative and detailed fantasy NPCs based on user input
 model: openai/gpt-4-1
 modelParameters:
