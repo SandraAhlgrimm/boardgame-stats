@@ -50,6 +50,25 @@ testData:
         - Forgotten Altar: The source of the curse.
       Final Twist: The curse can only be broken if the party convinces Eldara to
       forgive her betrayers, not through combat.
+  - input: |
+      Setting: Desert city during a festival
+      Tone: Light-hearted and adventurous
+      Level: 5
+      Special request: Include a magical cooking contest
+    expected: |
+      Title: The Sands of Spice
+      Campaign Hook: The bustling city of Sunspire is hosting its annual Festival of Flavors, attracting chefs and adventurers from across the land. The party is invited to participate in the legendary magical cooking contest.
+      Plot Summary: As the festival begins, the party must gather rare ingredients from around Sunspire, face off against quirky rival chefs, and overcome magical mishaps. Strange events hint that someone is sabotaging the contest for their own gain.
+      Key NPCs:
+        - Chef Zara: The charismatic contest host and renowned chef.
+        - Spicepaw: A mischievous, talking fennec fox who helps the party find rare spices.
+        - Sabir: A rival chef with a mysterious agenda.
+      Main Locations:
+        - Sunspire Market: A vibrant bazaar filled with exotic goods.
+        - The Grand Kitchen: The contest arena, enchanted with magical cooking tools.
+        - The Oasis: A hidden spot where rare ingredients grow.
+      Final Twist: The saboteur is revealed to be Sabir, who seeks to win the contest to lift a family curse. The party can help him, turning a rivalry into a heartfelt alliance.
+
 evaluators:
   - name: Output should include all required sections
     string:
