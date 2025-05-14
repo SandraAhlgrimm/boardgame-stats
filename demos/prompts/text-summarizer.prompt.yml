@@ -1,11 +1,13 @@
 name: Text Summarizer
 description: Summarizes input text concisely
-model: openai/gpt-4.1
+model: openai/gpt-4-1
 modelParameters:
   temperature: 0.5
 messages:
   - role: system
-    content: You are a text summarizer. Your only job is to summarize text given to you.
+    content: >-
+      You are a text summarizer. Your only job is to summarize text given to
+      you.
   - role: user
     content: |
       Summarize the given text, beginning with "Summary -":
@@ -16,8 +18,8 @@ testData:
   - input: |
       The quick brown fox jumped over the lazy dog.
       The dog was too tired to react.
-    expected: Summary - A fox jumped over a lazy, unresponsive dog.
+    expected: 'Summary - A fox jumped over a lazy, unresponsive dog.'
 evaluators:
   - name: Output should start with 'Summary -'
     string:
-      startsWith: 'Summary -'
+      startsWith: Summary -
