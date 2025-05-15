@@ -2,7 +2,7 @@ name: Loot & Magic Item Generator
 description: >-
   Generates creative, balanced, and story-rich loot and magic items for fantasy
   RPGs based on user input
-model: mistral ai/ministral-3b
+model: mistral-ai/ministral-3b
 modelParameters:
   temperature: 0.8
 messages:
