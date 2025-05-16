@@ -1,6 +1,6 @@
 name: One-Shot Campaign Generator
 description: Generates a creative one-shot RPG campaign based on user input
-model: microsoft/phi-4
+model: deepseek/deepseek-v3-0324
 modelParameters:
   temperature: 0.8
 messages:
