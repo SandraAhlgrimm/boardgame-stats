@@ -1,6 +1,5 @@
 name: Weekly Issue Summary
 
-
 on:
   workflow_dispatch:
   schedule:
