@@ -33,7 +33,7 @@ jobs:
           # Fetch issues created since that date and save to a file
           gh search issues "created:>$LAST_WEEK" --json title,body,url --repo ${{ github.repository }} > issues.json
           # Generate summary using the model by reading from file
-          cat issues.json | gh models run --file summary.prompt.yml > summary.md
+          cat issues.json | gh models run --file issue-summary.prompt.yml > summary.md
           # Create the summary issue
           gh issue create --title ISSUE_TITLE --body-file summary.md
         env:
