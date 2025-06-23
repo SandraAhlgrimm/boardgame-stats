@@ -28,7 +28,7 @@ jobs:
         run: |-
           # Calculate the date 7 days ago
           LAST_WEEK=$(date -d "7 days ago" +"%Y-%m-%d")
-          ISSUE_TITLE="Issue Summary - $(date -d '7 days ago' '+%B %d') to $(date '+%B %d')"
+          ISSUE_TITLE=$("Issue Summary - $(date -d '7 days ago' '+%B %d') to $(date '+%B %d')")
           
           # Fetch issues created since that date and save to a file
           gh search issues "created:>$LAST_WEEK" --json title,body,url --repo ${{ github.repository }} > issues.json
