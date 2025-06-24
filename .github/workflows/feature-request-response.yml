@@ -1,4 +1,4 @@
-name: 'AI inference'
+name: Feature Request Responder
 on:
   issues:
     types: [opened]
@@ -32,9 +32,9 @@ jobs:
         uses: actions/ai-inference@v1
         with:
           model: mistral-ai/ministral-3b
-          system: |
+          system-prompt: |
             You are an assistant that looks at newly-opened feature requests to ensure they are both viable and contain enough information. You should always ensure there is a motivation, use case, alternative approaches considered, and acceptance criteria. If any are missing, respond with a polite message to the author to ask for missing information. Consider the following issue title and body
-          user: |
+          prompt: |
             Title: ${{ steps.extract.outputs.title }}
             Body: ${{ steps.extract.outputs.body }}
           
