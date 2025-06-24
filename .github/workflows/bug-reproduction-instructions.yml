@@ -1,4 +1,4 @@
-name: Feature Request Responder
+name: Bug Report Reproduction Check
 on:
   issues:
     types: [opened]
@@ -26,20 +26,20 @@ jobs:
             core.setOutput('title', issue.data.title)
             core.setOutput('body', issue.data.body)
 
-      - name: Analyze Issue
-        if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
+      - name: Analyze Issue For Reproduction
+        if: contains(join(github.event.issue.labels.*.name, ','), 'bug')
         id: analyze-issue
         uses: actions/ai-inference@v1
         with:
           model: mistral-ai/ministral-3b
           system-prompt: |
-            You are an assistant that looks at newly-opened feature requests to ensure they are both viable and contain enough information. You should always ensure there is a motivation, use case, alternative approaches considered, and acceptance criteria. If any are missing, respond with a polite message to the author to ask for missing information. Consider the following issue title and body
+            Given a bug report title and text for a web application, return 'pass' if there is enough information to reliably reproduce the issue, meaning the report clearly describes the steps to reproduce the problem, specifies the expected and actual behavior, and includes environment details such as browser and operating system; if any of these elements are missing or unclear, return a brief description of what is missing instead of 'pass'. Consider the following title and body:
           prompt: |
             Title: ${{ steps.issue.outputs.title }}
             Body: ${{ steps.issue.outputs.body }}
           
       - name: Comment On Issue
-        if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
+        if: steps.analyze-issue.outputs.output != 'pass'
         uses: actions/github-script@v7
         env:
           AI_RESPONSE: ${{ steps.analyze-issue.outputs.response }}
