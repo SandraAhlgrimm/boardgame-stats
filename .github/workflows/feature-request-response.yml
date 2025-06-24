@@ -42,10 +42,10 @@ jobs:
         if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
         uses: actions/github-script@v7
         with:
+          ai_response: ${{ steps.analyze-issue.outputs.result }}
           script: |
             const issue_number = context.issue.number
             console.log(steps.analyze-issue)
-            const ai_response = `${{ steps.analyze-issue.outputs.result }}`
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
