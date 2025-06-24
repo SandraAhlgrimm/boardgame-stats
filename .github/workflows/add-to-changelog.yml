@@ -43,7 +43,8 @@ jobs:
           RELEASE_ISSUE_BODY=$(gh issue view "$RELEASE_ISSUE" --json body --jq '.body')
 
           # Append summary to release issue body
-          NEW_BODY="${RELEASE_ISSUE_BODY}"$'\n'"$(cat summary.md)"
+          FORMATTED_LINE="- $(cat summary.md) (#$PR_NUMBER)"
+          NEW_BODY="${RELEASE_ISSUE_BODY}"$'\n'"$FORMATTED_LINE"
 
           # Update the release issue with the new body
           gh issue edit "$RELEASE_ISSUE" --body "$NEW_BODY"
