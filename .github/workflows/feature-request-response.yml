@@ -44,6 +44,7 @@ jobs:
         with:
           script: |
             const issue_number = context.issue.number
+            console.log(steps.analyze-issue)
             const ai_response = `${{ steps.analyze-issue.outputs.result }}`
             await github.rest.issues.createComment({
               owner: context.repo.owner,
