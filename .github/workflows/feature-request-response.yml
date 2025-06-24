@@ -37,18 +37,22 @@ jobs:
           prompt: |
             Title: ${{ steps.extract.outputs.title }}
             Body: ${{ steps.extract.outputs.body }}
+
+      -  name: Show all outputs
+         run: |
+            echo "Response: ${{ toJson(steps.analyze-issue.outputs) }}"
           
-      - name: Comment On Issue
-        if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
-        uses: actions/github-script@v7
-        env:
-          AI_RESPONSE: ${{ steps.analyze-issue.outputs.result }}
-        with:
-          script: |
-            const issue_number = context.issue.number
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number,
-              body: process.env.AI_RESPONSE
-            })
+      # - name: Comment On Issue
+      #   if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
+      #   uses: actions/github-script@v7
+      #   env:
+      #     AI_RESPONSE: ${{ steps.analyze-issue.outputs.result }}
+      #   with:
+      #     script: |
+      #       const issue_number = context.issue.number
+      #       await github.rest.issues.createComment({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         issue_number,
+      #         body: process.env.AI_RESPONSE
+      #       })
