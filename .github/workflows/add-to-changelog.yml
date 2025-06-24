@@ -1,4 +1,4 @@
-name: Weekly Issue Summary
+name: Add to Changelog
 
 on:
   pull_request:
