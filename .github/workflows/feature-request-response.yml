@@ -40,7 +40,7 @@ jobs:
 
       -  name: Show all outputs
          run: |
-            echo "Response: ${{ toJson(steps.analyze-issue.outputs) }}"
+            echo ${{steps}}
           
       # - name: Comment On Issue
       #   if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
