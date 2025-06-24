@@ -41,13 +41,14 @@ jobs:
       - name: Comment On Issue
         if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
         uses: actions/github-script@v7
+        env:
+          AI_RESPONSE: ${{ steps.analyze-issue.outputs.result }}
         with:
-          ai_response: ${{ steps.analyze-issue.outputs.result }}
           script: |
             const issue_number = context.issue.number
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number,
-              body: ai_response
+              body: process.env.AI_RESPONSE
             })
