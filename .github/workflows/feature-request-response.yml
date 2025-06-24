@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Issue
-        id: fetch-issue
+        id: issue
         uses: actions/github-script@v7
         with:
           script: |
@@ -35,8 +35,8 @@ jobs:
           system-prompt: |
             You are an assistant that looks at newly-opened feature requests to ensure they are both viable and contain enough information. You should always ensure there is a motivation, use case, alternative approaches considered, and acceptance criteria. If any are missing, respond with a polite message to the author to ask for missing information. Consider the following issue title and body
           prompt: |
-            Title: ${{ steps.extract.outputs.title }}
-            Body: ${{ steps.extract.outputs.body }}
+            Title: ${{ steps.issue.outputs.title }}
+            Body: ${{ steps.issue.outputs.body }}
           
       - name: Comment On Issue
         if: contains(join(github.event.issue.labels.*.name, ','), 'feature-request')
