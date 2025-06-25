@@ -31,7 +31,7 @@ jobs:
           PR_NUMBER="${{ github.event.pull_request.number }}"
 
           # Fetch PR and save to a file
-          gh pr view "$PR_NUMBER" --json title,body,author,comments,reviews > pr.json
+          gh pr view "$PR_NUMBER" --json title,body,comments,reviews > pr.json
           
           # Generate a summary using the model by reading from file
           cat pr.json | gh models run xai/grok-3-mini \
