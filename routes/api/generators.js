@@ -20,16 +20,10 @@ async function modelCall(messages, model, parameters = {}) {
 	try {
 		const client = ModelClient(endpoint, new AzureKeyCredential(token))
 
-		const defaultParameters = {
-			temperature: 1.0,
-			top_p: 1.0,
-		}
-
 		const response = await client.path('/chat/completions').post({
 			body: {
 				messages,
 				model,
-				...defaultParameters,
 				...parameters,
 			},
 		})
