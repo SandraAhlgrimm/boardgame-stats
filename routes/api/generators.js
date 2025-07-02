@@ -50,7 +50,8 @@ async function modelCall(messages, model, parameters = {}) {
 
 		if (isUnexpected(response)) {
 			console.error('AI API error:', response.body)
-			throw new Error('AI API error: ' + response.body?.error?.message || 'Unknown API error')
+			const errorMessage = response.body?.error?.message || JSON.stringify(response.body) || 'Unknown API error'
+			throw new Error('AI API error: ' + errorMessage)
 		}
 
 		return response.body.choices[0].message.content
@@ -70,7 +71,7 @@ router.post('/campaign', async (req, res) => {
 		const userInput = req.body.input || 'A classic fantasy adventure for level 5 characters'
 		const messages = replaceInputPlaceholder(promptConfig.messages, userInput)
 
-		const campaign = await modelCall(messages, promptConfig.model, promptConfig.parameters || {})
+		const campaign = await modelCall(messages, promptConfig.model, promptConfig.modelParameters || {})
 
 		res.json({
 			success: true,
@@ -97,7 +98,7 @@ router.post('/character', async (req, res) => {
 		const userInput = req.body.input || 'A helpful tavern keeper'
 		const messages = replaceInputPlaceholder(promptConfig.messages, userInput)
 
-		const character = await modelCall(messages, promptConfig.model, promptConfig.parameters || {})
+		const character = await modelCall(messages, promptConfig.model, promptConfig.modelParameters || {})
 
 		res.json({
 			success: true,
@@ -110,6 +111,47 @@ router.post('/character', async (req, res) => {
 		res.status(500).json({
 			success: false,
 			error: 'Failed to generate character: ' + errorMessage,
+		})
+	}
+})
+
+/**
+ * Get list of available models from GitHub Models Catalog API
+ */
+router.get('/models', async (req, res) => {
+	try {
+		if (!token) {
+			throw new Error('GITHUB_TOKEN environment variable is not set')
+		}
+
+		// Use GitHub REST API to fetch model catalog
+		const response = await fetch('https://models.github.ai/catalog/models', {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token}`,
+				Accept: 'application/vnd.github+json',
+				'X-GitHub-Api-Version': '2022-11-28',
+				'User-Agent': 'BoardGame-Stats-App',
+			},
+		})
+
+		if (!response.ok) {
+			const errorBody = await response.text()
+			throw new Error(`GitHub API error: ${response.status} ${response.statusText} - ${errorBody}`)
+		}
+
+		const data = await response.json()
+
+		res.json({
+			success: true,
+			models: data,
+		})
+	} catch (error) {
+		console.error('Error fetching models from GitHub API:', error)
+		const errorMessage = error?.message || 'Unknown error occurred'
+		res.status(500).json({
+			success: false,
+			error: 'Failed to fetch models: ' + errorMessage,
 		})
 	}
 })
