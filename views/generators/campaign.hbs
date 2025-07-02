@@ -1,0 +1,74 @@
+<h2>Campaign Generator</h2>
+<p>Generate a complete one-shot RPG campaign based on your preferences.</p>
+
+<form id='campaignForm'>
+	<label for='input'>Campaign Preferences:</label>
+	<textarea
+		id='input'
+		name='input'
+		rows='4'
+		placeholder='Example: Setting: Haunted forest, Tone: Dark and mysterious, Level: 3, Special request: Include a talking animal companion'
+		required
+	></textarea>
+	<small>Describe the setting, tone, player level, and any special requests for your campaign.</small>
+
+	<button type='submit'>Generate Campaign</button>
+</form>
+
+<div id='loading' style='display: none;'>
+	<p aria-busy='true'>Generating your campaign...</p>
+</div>
+
+<div id='result' style='display: none;'>
+	<h3>Generated Campaign</h3>
+	<article id='output' style='white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;'></article>
+	<button type='button' onclick='resetForm()'>Generate Another</button>
+</div>
+
+<script>
+	document.getElementById('campaignForm').addEventListener('submit', async (e) => {
+		e.preventDefault();
+		
+		const input = document.getElementById('input').value;
+		const loadingDiv = document.getElementById('loading');
+		const resultDiv = document.getElementById('result');
+		const outputDiv = document.getElementById('output');
+		const form = document.getElementById('campaignForm');
+		
+		// Show loading, hide form and previous results
+		form.style.display = 'none';
+		loadingDiv.style.display = 'block';
+		resultDiv.style.display = 'none';
+		
+		try {
+			const response = await fetch('/api/generators/campaign', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ input })
+			});
+			
+			const data = await response.json();
+			
+			if (data.success) {
+				outputDiv.textContent = data.campaign;
+				loadingDiv.style.display = 'none';
+				resultDiv.style.display = 'block';
+			} else {
+				throw new Error(data.error || 'Failed to generate campaign');
+			}
+		} catch (error) {
+			console.error('Error:', error);
+			outputDiv.innerHTML = '<p style="color: red;">Error: ' + error.message + '</p>';
+			loadingDiv.style.display = 'none';
+			resultDiv.style.display = 'block';
+		}
+	});
+	
+	function resetForm() {
+		document.getElementById('campaignForm').style.display = 'block';
+		document.getElementById('result').style.display = 'none';
+		document.getElementById('input').value = '';
+	}
+</script>

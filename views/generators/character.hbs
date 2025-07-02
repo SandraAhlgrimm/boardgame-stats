@@ -1,0 +1,74 @@
+<h2>Character Generator</h2>
+<p>Generate memorable NPCs with detailed backgrounds and personalities.</p>
+
+<form id='characterForm'>
+	<label for='input'>Character Description:</label>
+	<textarea
+		id='input'
+		name='input'
+		rows='3'
+		placeholder='Example: A mysterious elven wizard who guards ancient secrets'
+		required
+	></textarea>
+	<small>Describe the type of character, role, or personality you want to generate.</small>
+
+	<button type='submit'>Generate Character</button>
+</form>
+
+<div id='loading' style='display: none;'>
+	<p aria-busy='true'>Generating your character...</p>
+</div>
+
+<div id='result' style='display: none;'>
+	<h3>Generated Character</h3>
+	<article id='output' style='white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;'></article>
+	<button type='button' onclick='resetForm()'>Generate Another</button>
+</div>
+
+<script>
+	document.getElementById('characterForm').addEventListener('submit', async (e) => {
+		e.preventDefault();
+		
+		const input = document.getElementById('input').value;
+		const loadingDiv = document.getElementById('loading');
+		const resultDiv = document.getElementById('result');
+		const outputDiv = document.getElementById('output');
+		const form = document.getElementById('characterForm');
+		
+		// Show loading, hide form and previous results
+		form.style.display = 'none';
+		loadingDiv.style.display = 'block';
+		resultDiv.style.display = 'none';
+		
+		try {
+			const response = await fetch('/api/generators/character', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ input })
+			});
+			
+			const data = await response.json();
+			
+			if (data.success) {
+				outputDiv.textContent = data.character;
+				loadingDiv.style.display = 'none';
+				resultDiv.style.display = 'block';
+			} else {
+				throw new Error(data.error || 'Failed to generate character');
+			}
+		} catch (error) {
+			console.error('Error:', error);
+			outputDiv.innerHTML = '<p style="color: red;">Error: ' + error.message + '</p>';
+			loadingDiv.style.display = 'none';
+			resultDiv.style.display = 'block';
+		}
+	});
+	
+	function resetForm() {
+		document.getElementById('characterForm').style.display = 'block';
+		document.getElementById('result').style.display = 'none';
+		document.getElementById('input').value = '';
+	}
+</script>
