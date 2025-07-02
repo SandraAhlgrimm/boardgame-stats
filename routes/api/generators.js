@@ -115,45 +115,4 @@ router.post('/character', async (req, res) => {
 	}
 })
 
-/**
- * Get list of available models from GitHub Models Catalog API
- */
-router.get('/models', async (req, res) => {
-	try {
-		if (!token) {
-			throw new Error('GITHUB_TOKEN environment variable is not set')
-		}
-
-		// Use GitHub REST API to fetch model catalog
-		const response = await fetch('https://models.github.ai/catalog/models', {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${token}`,
-				Accept: 'application/vnd.github+json',
-				'X-GitHub-Api-Version': '2022-11-28',
-				'User-Agent': 'BoardGame-Stats-App',
-			},
-		})
-
-		if (!response.ok) {
-			const errorBody = await response.text()
-			throw new Error(`GitHub API error: ${response.status} ${response.statusText} - ${errorBody}`)
-		}
-
-		const data = await response.json()
-
-		res.json({
-			success: true,
-			models: data,
-		})
-	} catch (error) {
-		console.error('Error fetching models from GitHub API:', error)
-		const errorMessage = error?.message || 'Unknown error occurred'
-		res.status(500).json({
-			success: false,
-			error: 'Failed to fetch models: ' + errorMessage,
-		})
-	}
-})
-
 module.exports = router
