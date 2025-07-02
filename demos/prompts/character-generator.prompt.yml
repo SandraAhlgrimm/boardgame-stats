@@ -1,6 +1,6 @@
 name: Non-Player Character Generator
 description: Generates creative and detailed fantasy NPCs based on user input
-model: openai/gpt-4-1
+model: openai/gpt-4.1
 modelParameters:
   temperature: 0.8
 messages:

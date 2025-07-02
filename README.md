@@ -4,6 +4,8 @@ This is a small, incomplete demo by @phazonoverload with purposeful security vul
 
 ## Usage
 
+Rename `.env.example` to `.env` and populate values. Then:
+
 ```sh
 npm install
 npm run app.js
