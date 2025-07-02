@@ -11,55 +11,6 @@ const router = express.Router()
 const token = process.env['GITHUB_TOKEN']
 const endpoint = 'https://models.github.ai/inference'
 
-// Load prompt file
-function loadPrompt(promptPath) {
-	const fullPath = path.resolve(__dirname, '../../', promptPath)
-	const fileContents = fs.readFileSync(fullPath, 'utf8')
-	return yaml.load(fileContents)
-}
-
-// Replace {{input}} placeholder in messages
-function replaceInputPlaceholder(messages, userInput) {
-	return messages.map(message => {
-		if (message.content.includes('{{input}}')) {
-			return {
-				...message,
-				content: message.content.replace('{{input}}', userInput),
-			}
-		}
-		return message
-	})
-}
-
-// Make external API call with GitHub Models
-async function modelCall(messages, model, parameters = {}) {
-	if (!token) {
-		throw new Error('GITHUB_TOKEN environment variable is not set')
-	}
-
-	try {
-		const client = ModelClient(endpoint, new AzureKeyCredential(token))
-
-		const response = await client.path('/chat/completions').post({
-			body: {
-				messages,
-				model,
-				...parameters,
-			},
-		})
-
-		if (isUnexpected(response)) {
-			console.error('AI API error:', response.body)
-			throw new Error('AI API error: ' + response.body?.error?.message || 'Unknown API error')
-		}
-
-		return response.body.choices[0].message.content
-	} catch (error) {
-		console.error('Error in modelCall:', error)
-		throw error
-	}
-}
-
 /**
  * Body: { input: string } - User preferences for campaign generation
  * Example: { "input": "Setting: Underwater city, Tone: Comedic, Level: 8" }
@@ -70,7 +21,7 @@ router.post('/campaign', async (req, res) => {
 		const userInput = req.body.input || 'A classic fantasy adventure for level 5 characters'
 		const messages = replaceInputPlaceholder(promptConfig.messages, userInput)
 
-		const campaign = await modelCall(messages, promptConfig.model, promptConfig.parameters || {})
+		const campaign = await modelCall(messages, promptConfig.model, promptConfig.modelParameters || {})
 
 		res.json({
 			success: true,
@@ -97,7 +48,7 @@ router.post('/character', async (req, res) => {
 		const userInput = req.body.input || 'A helpful tavern keeper'
 		const messages = replaceInputPlaceholder(promptConfig.messages, userInput)
 
-		const character = await modelCall(messages, promptConfig.model, promptConfig.parameters || {})
+		const character = await modelCall(messages, promptConfig.model, promptConfig.modelParameters || {})
 
 		res.json({
 			success: true,
@@ -113,5 +64,55 @@ router.post('/character', async (req, res) => {
 		})
 	}
 })
+
+// Make external API call with GitHub Models
+async function modelCall(messages, model, parameters = {}) {
+	if (!token) {
+		throw new Error('GITHUB_TOKEN environment variable is not set')
+	}
+
+	try {
+		const client = ModelClient(endpoint, new AzureKeyCredential(token))
+
+		const response = await client.path('/chat/completions').post({
+			body: {
+				messages,
+				model,
+				...parameters,
+			},
+		})
+
+		if (isUnexpected(response)) {
+			console.error('AI API error:', response.body)
+			const errorMessage = response.body?.error?.message || JSON.stringify(response.body) || 'Unknown API error'
+			throw new Error('AI API error: ' + errorMessage)
+		}
+
+		return response.body.choices[0].message.content
+	} catch (error) {
+		console.error('Error in modelCall:', error)
+		throw error
+	}
+}
+
+// Load prompt file
+function loadPrompt(promptPath) {
+	const fullPath = path.resolve(__dirname, '../../', promptPath)
+	const fileContents = fs.readFileSync(fullPath, 'utf8')
+	return yaml.load(fileContents)
+}
+
+// Replace {{input}} placeholder in messages
+function replaceInputPlaceholder(messages, userInput) {
+	return messages.map(message => {
+		if (message.content.includes('{{input}}')) {
+			return {
+				...message,
+				content: message.content.replace('{{input}}', userInput),
+			}
+		}
+		return message
+	})
+}
 
 module.exports = router
