@@ -11,6 +11,26 @@ const router = express.Router()
 const token = process.env['GITHUB_TOKEN']
 const endpoint = 'https://models.github.ai/inference'
 
+// Load prompt file
+function loadPrompt(promptPath) {
+	const fullPath = path.resolve(__dirname, '../../', promptPath)
+	const fileContents = fs.readFileSync(fullPath, 'utf8')
+	return yaml.load(fileContents)
+}
+
+// Replace {{input}} placeholder in messages
+function replaceInputPlaceholder(messages, userInput) {
+	return messages.map(message => {
+		if (message.content.includes('{{input}}')) {
+			return {
+				...message,
+				content: message.content.replace('{{input}}', userInput),
+			}
+		}
+		return message
+	})
+}
+
 // Make external API call with GitHub Models
 async function modelCall(messages, model, parameters = {}) {
 	if (!token) {
@@ -38,26 +58,6 @@ async function modelCall(messages, model, parameters = {}) {
 		console.error('Error in modelCall:', error)
 		throw error
 	}
-}
-
-// Load prompt file
-function loadPrompt(promptPath) {
-	const fullPath = path.resolve(__dirname, '../../', promptPath)
-	const fileContents = fs.readFileSync(fullPath, 'utf8')
-	return yaml.load(fileContents)
-}
-
-// Replace {{input}} placeholder in messages
-function replaceInputPlaceholder(messages, userInput) {
-	return messages.map(message => {
-		if (message.content.includes('{{input}}')) {
-			return {
-				...message,
-				content: message.content.replace('{{input}}', userInput),
-			}
-		}
-		return message
-	})
 }
 
 /**
