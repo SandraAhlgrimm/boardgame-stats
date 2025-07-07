@@ -1,6 +1,6 @@
 name: One-Shot Campaign Generator
 description: Generates a creative one-shot RPG campaign based on user input
-model: deepseek/deepseek-r1-0528
+model: openai/gpt-4.1
 modelParameters:
   temperature: 0.8
 messages:
@@ -8,11 +8,10 @@ messages:
     content: >
       You are a dungeon master AI. Your job is to generate a creative, engaging,
       and playable one-shot fantasy RPG campaign based on the player's
-      preferences. Include a plot summary, key NPCs, main locations, a hook, and
-      a final twist. Use clear formatting.
+      preferences. Include a plot summary, key NPCs, main locations, a hook, a
+      final twist, and final encounter. Use clear formatting.
   - role: user
     content: |
-      Generate a fantasy RPG one-shot campaign with the following preferences:
       <preferences>
       {{input}}
       </preferences>
@@ -23,6 +22,7 @@ messages:
       - Key NPCs (with brief descriptions)
       - Main Locations (with brief descriptions)
       - Final Twist
+      - Final Encounter
 testData:
   - input: |
       Setting: Haunted forest
@@ -82,7 +82,7 @@ testData:
 evaluators:
   - name: Required sections
     llm:
-      modelId: 'azureml://registries/azure-openai/models/o4-mini/versions/2025-04-16'
+      modelId: azureml://registries/azure-openai/models/o4-mini/versions/2025-04-16
       prompt: |+
         Check that the output contains ALL of the following sections:
 
@@ -92,6 +92,7 @@ evaluators:
         - Key NPCs
         - Main Locations
         - Final Twist
+        - Final Encounter
 
         Your output should only be YES or NO on its own line
 
@@ -104,3 +105,5 @@ evaluators:
           score: 1
         - choice: 'NO'
           score: 0
+  - name: Coherence
+    uses: github/coherence
