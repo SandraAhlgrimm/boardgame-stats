@@ -17,7 +17,7 @@ const endpoint = 'https://models.github.ai/inference'
  */
 router.post('/campaign', async (req, res) => {
 	try {
-		const promptConfig = loadPrompt('demos/prompts/campaign-generator.prompt.yml')
+		const promptConfig = loadPrompt('Prompts/campaign-generator.prompt.yml')
 		const userInput = req.body.input || 'A classic fantasy adventure for level 5 characters'
 		const messages = replaceInputPlaceholder(promptConfig.messages, userInput)
 
@@ -44,7 +44,7 @@ router.post('/campaign', async (req, res) => {
  */
 router.post('/character', async (req, res) => {
 	try {
-		const promptConfig = loadPrompt('demos/prompts/character-generator.prompt.yml')
+		const promptConfig = loadPrompt('Prompts/character-generator.prompt.yml')
 		const userInput = req.body.input || 'A helpful tavern keeper'
 		const messages = replaceInputPlaceholder(promptConfig.messages, userInput)
 
